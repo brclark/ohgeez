@@ -1,13 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'ohgeez/base.html' %}
 
 {% block content %}
 <div class="row">
   <div class="col-lg-2"></div>
   <div class="col-lg-8">
     <div class="list-group col-log">
-      {% for category in categories %}
+      {% for item in object_list %}
       <a href="#" class="list-group-item list-group-item-action">
-        {{ category.name }}
+        {{ item.name }}
       </a>
       {% endfor %}
     </div>

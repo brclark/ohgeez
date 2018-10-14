@@ -20,8 +20,11 @@ from django.conf.urls import url
 from ohgeez import views
 
 urlpatterns = [
-    url(r'^$', views.HomePageView.as_view()),
-    url(r'^test/', views.TestPageView.as_view()),
+    url(r'^$', views.CategoryListView.as_view(), name='index'),
+    url(r'^items/category=(?P<category>[0-9]{1,4})/$', views.ItemListView.as_view(), name='item-list'),
+    url(r'^items/', views.ItemListView.as_view()),
     url(r'^comments/', include('django_comments.urls')),
+    url(r'^item/add/', views.CreateItemView.as_view(), name='add-item'),
+    path('<slug:slug>/', views.ItemDetailView.as_view(), name='item-detail'),
     path('admin/', admin.site.urls),
 ]

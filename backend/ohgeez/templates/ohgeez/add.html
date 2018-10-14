@@ -1,0 +1,21 @@
+{% extends 'ohgeez/base.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-8">
+    <form method="post">{% csrf_token %}
+      <div class="card">
+        <div class="card-header">
+          Registration
+        </div>
+        <div class="card-body">
+          {{ form.as_p }}
+          <input type="submit" value="Save">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

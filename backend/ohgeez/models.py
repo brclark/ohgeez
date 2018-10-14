@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
+from geopy.geocoders import Nominatim
 
 
 class Category(models.Model):
@@ -12,7 +13,6 @@ class Category(models.Model):
         return "%s" % (self.name)
 
 class Item(models.Model):
-
     # Fields
     # name of new location
     name = models.CharField(_("Name"), max_length=128)
@@ -41,16 +41,16 @@ class Item(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     updated_at = models.DateTimeField(editable=False, auto_now=True)
 
-    # def __addGps():
-    #     geolocator = Nominatim(user_agent="ohgeez")
-    #     location = geolocator.geocode("%s %s, %s %s" % (self.address, self.city, self.state, self.zip_code))
-    #     self.longitude = location.longitude
-    #     self.latitude = location.latitude
-    #
-    # def save(self):
-    #     if not self.id:
-    #         self.__addGps()
-    #     super(Item, self).save()
+    def __addGps(self):
+        geolocator = Nominatim(user_agent="ohgeez")
+        location = geolocator.geocode("%s %s, %s %s" % (self.address, self.city, self.state, self.zip_code))
+        self.longitude = location.longitude
+        self.latitude = location.latitude
+
+    def save(self):
+        if not self.id:
+            self.__addGps()
+        super(Item, self).save()
 
     def __str__(self):
         return "%s" % (self.name)
